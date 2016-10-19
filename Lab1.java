@@ -4,7 +4,7 @@ import java.util.Scanner;
 import java.util.regex.Pattern;   
 
 //lab2 change
-//lab1 code
+//lab1 code labB1_4
 
 public class EvaExpression {
 	//主程序，表达式的输入
