@@ -3,8 +3,7 @@ import java.util.Arrays;
 import java.util.Scanner;   
 import java.util.regex.Pattern;   
 
-//lab2 change
-//lab1 code
+//review code
 
 public class EvaExpression {
 	//主程序，表达式的输入
@@ -31,9 +30,9 @@ public class EvaExpression {
 }
 
 class ProExpression{
-	String MemStr = "";
-	String DerStr = "";
-	String Estr = "";
+	String MemStr = "";//存储合法的表达式
+	String DerStr = "";//存储求导的结果
+	String Estr = "";//判断表达式输入的结果
 	
 	//整理表达式
 	private String StaExp(String str){
