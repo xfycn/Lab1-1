@@ -1,5 +1,5 @@
 package lab;
-//pmd之后的代码
+//findbugs之后的代码
 import java.util.Arrays;
 import java.util.Scanner;
 import java.util.regex.Pattern;
