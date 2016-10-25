@@ -1,5 +1,5 @@
 package lab;
-//checkstyle之后的代码
+//pmd之后的代码
 import java.util.Arrays;
 import java.util.Scanner;
 import java.util.regex.Pattern;
@@ -30,50 +30,50 @@ public class EvaExpression {
 }
 
 class ProExpression {
-  String MemStr = ""; // 存储合法的表达式
-  String Derstr = ""; // 存储求导的结果
-  String Estr = ""; // 判断表达式输入的结果
+  String memStr = ""; // 存储合法的表达式
+  String derstr = ""; // 存储求导的结果
+  String estr = ""; // 判断表达式输入的结果
 
   // 整理表达式
   private String StaExp(String str) {
-    String sEstr;
-    sEstr = str;
+    String sestr;
+    sestr = str;
     int j = 0;
     while (j != -1) {// 把x^2转换为x*x等
-      j = sEstr.indexOf('^');
+      j = sestr.indexOf('^');
       if (j != -1) {
-        String str0 = sEstr.substring(j - 1, j);
+        String str0 = sestr.substring(j - 1, j);
         String str1 = "";
         int i;
-        for (i = j + 1; i < sEstr.length(); i++) {
-          if (!(sEstr.charAt(i) >= 48 && sEstr.charAt(i) <= 57)) {
+        for (i = j + 1; i < sestr.length(); i++) {
+          if (!(sestr.charAt(i) >= 48 && sestr.charAt(i) <= 57)) {
             break;
           }
         }
         String str2 = "";
-        str2 = sEstr.substring(j + 1, i);
+        str2 = sestr.substring(j + 1, i);
         int h = Integer.valueOf(str2).intValue();
         for (int k = 0; k < h; k++) {
           str1 = str1 + str0 + "*";
         }
-        sEstr = sEstr.substring(0, j - 1) + str1.substring(0, str1.length() - 1) + sEstr.substring(i);
+        sestr = sestr.substring(0, j - 1) + str1.substring(0, str1.length() - 1) + sestr.substring(i);
       }
     }
     String rstr = "";// 把系数提出来，变量按序排列
-    String[] sEstrArray = sEstr.split("\\+");
-    String[][] Array = new String[sEstrArray.length][2];
-    for (int k = 0; k < sEstrArray.length; k++) {
-      String[] _sEstrArray = sEstrArray[k].split("\\*");
+    String[] sestrArray = sestr.split("\\+");
+    String[][] Array = new String[sestrArray.length][2];
+    for (int k = 0; k < sestrArray.length; k++) {
+      String[] _sestrArray = sestrArray[k].split("\\*");
       float num = 1;
       String str0 = "";
-      String[] str1 = new String[_sEstrArray.length];
+      String[] str1 = new String[_sestrArray.length];
       int m = 0;
-      for (int l = 0; l < _sEstrArray.length; l++) {
-        char ch = _sEstrArray[l].charAt(0);
+      for (int l = 0; l < _sestrArray.length; l++) {
+        char ch = _sestrArray[l].charAt(0);
         if ((ch >= '0' && ch <= '9') || ch == '-') {
-          num = num * Float.valueOf(_sEstrArray[l]).floatValue();
+          num = num * Float.valueOf(_sestrArray[l]).floatValue();
         } else {
-          str1[m++] = _sEstrArray[l];
+          str1[m++] = _sestrArray[l];
         }
       }
       Array[k][0] = String.valueOf(num);
@@ -91,8 +91,8 @@ class ProExpression {
         Array[k][1] = "";
       }
     }
-    for (int k = 0; k < sEstrArray.length - 1; k++) {
-      for (int l = k + 1; l < sEstrArray.length; l++) {
+    for (int k = 0; k < sestrArray.length - 1; k++) {
+      for (int l = k + 1; l < sestrArray.length; l++) {
         if (Array[k][1].equals(Array[l][1])) {
           Array[k][0] = String
               .valueOf(Float.valueOf(Array[k][0]).floatValue() + Float.valueOf(Array[l][0]).floatValue());
@@ -100,7 +100,7 @@ class ProExpression {
         }
       }
     }
-    for (int k = 0; k < sEstrArray.length; k++) {
+    for (int k = 0; k < sestrArray.length; k++) {
       if (Array[k][1] != "#") {
         if (Array[k][1] != "") {
           rstr += Array[k][0] + "*" + Array[k][1] + "+";
@@ -186,11 +186,11 @@ class ProExpression {
       }
     }
     if (flag == 1) {
-      Estr = "Expressions is not valid!";
+      estr = "Expressions is not valid!";
       result = false;
     } else {
-      Estr = str;
-      Estr = StaExp(Estr);
+      estr = str;
+      estr = StaExp(estr);
       result = true;
     }
     return result;
@@ -200,7 +200,7 @@ class ProExpression {
   private String simplify(String str) {
     int i;
     int flag = 0;
-    String sstr = MemStr;
+    String sstr = memStr;
     String[] strArray = str.split(" ");
     if (strArray.length > 1) {
       for (i = 1; i < strArray.length; i++) {
@@ -224,13 +224,13 @@ class ProExpression {
 
   // 求导
   private boolean derivative(String str) {
-    Derstr = "";
+    derstr = "";
     int i;
     int cnt = 0;
     String[] strArray = str.split(" ");
-    String[] cstrArray = MemStr.split("\\+");
+    String[] cstrArray = memStr.split("\\+");
     for (i = 0; i < cstrArray.length; i++) {
-      String Estr = "";
+      String estr = "";
       int k = cstrArray[i].indexOf(strArray[1]);
       if (k != -1) {
         int cnt1 = 0;
@@ -239,17 +239,17 @@ class ProExpression {
             cnt1 += 1;
           }
         }
-        Estr = cstrArray[i].substring(0, k) + cstrArray[i].substring(k + 1);
+        estr = cstrArray[i].substring(0, k) + cstrArray[i].substring(k + 1);
         if (cstrArray[i].charAt(k) == '*') {
-          Estr = Estr.substring(0, k) + Estr.substring(k + 1);
+          estr = estr.substring(0, k) + estr.substring(k + 1);
         } else if (cstrArray[i].charAt(k - 1) == '*') {
-          Estr = Estr.substring(0, k - 1) + Estr.substring(k);
+          estr = estr.substring(0, k - 1) + estr.substring(k);
         }
         if (cnt1 > 1) {
-          Estr = Estr + "*" + String.valueOf(cnt1);
+          estr = estr + "*" + String.valueOf(cnt1);
         }
-        Derstr += Estr;
-        Derstr += "+";
+        derstr += estr;
+        derstr += "+";
       } else {
         cnt += 1;
       }
@@ -258,8 +258,8 @@ class ProExpression {
       System.out.println("Variable Error!");
       return false;
     } else {
-      Derstr = Derstr.substring(0, Derstr.length() - 1);
-      Derstr = StaExp(Derstr);
+      derstr = derstr.substring(0, derstr.length() - 1);
+      derstr = StaExp(derstr);
       return true;
     }
   }
@@ -275,15 +275,15 @@ class ProExpression {
       }
     } else if (result2 == true) {
       if (derivative(str)) {
-        System.out.println(Derstr);
+        System.out.println(derstr);
       }
     } else {
       boolean r = expression(str);
       if (r == true) {
-        this.MemStr = this.Estr;
-        System.out.println(MemStr);
+        this.memStr = this.estr;
+        System.out.println(memStr);
       } else {
-        System.out.println(Estr);
+        System.out.println(estr);
       }
     }
   }
