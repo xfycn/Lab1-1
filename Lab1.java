@@ -1,5 +1,5 @@
 package lab;
-//findbugs之后的代码
+//visualvm之后的代码
 import java.util.Arrays;
 import java.util.Scanner;
 import java.util.regex.Pattern;
